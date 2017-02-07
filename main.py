@@ -87,9 +87,7 @@ def ship_size(data, coords):
 
 def touch_check(data, coords):
     '''
-    
     (data, list) -> (bool)
-    
     Being used in is_valid(data) to ckeck if two ships aren`t touching.
     '''
     stars = data[0] + data[1]
@@ -111,9 +109,7 @@ def touch_check(data, coords):
 
 def is_valid(data):
     '''
-    
     (data) -> (bool)
-    
     Checks if field is valid to play.
     '''
     stars = data[0] + data[1]
@@ -129,3 +125,18 @@ def is_valid(data):
         if touch_check(data, star) is False:
             return False
     return True
+
+
+def field_to_str(data):
+    stars = data[0]
+    lines = []
+    out = ''
+    for i in range(10):
+        lines.append([' ' * 10])
+    for star in stars:
+        line = list(lines[star[1] - 1][0])
+        line[alphabet.index(star[0])] = '*'
+        lines[star[1] - 1][0] = ''.join(line)
+    for line in lines:
+        out += line[0] + '\n'
+    return out
