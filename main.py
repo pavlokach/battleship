@@ -87,7 +87,9 @@ def ship_size(data, coords):
 
 def touch_check(data, coords):
     '''
+    
     (data, list) -> (bool)
+    
     Being used in is_valid(data) to ckeck if two ships aren`t touching.
     '''
     stars = data[0] + data[1]
@@ -109,7 +111,9 @@ def touch_check(data, coords):
 
 def is_valid(data):
     '''
+    
     (data) -> (bool)
+    
     Checks if field is valid to play.
     '''
     stars = data[0] + data[1]
