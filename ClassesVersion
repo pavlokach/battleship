@@ -1,4 +1,4 @@
-class Ship():
+class Ship:
     def __init__(self, length):
         self.__length = length
         self.__hit = [False] * length
@@ -31,16 +31,18 @@ class Player:
     def __init__(self, name):
         self.name = name
 
+    @staticmethod
     def read_position(self):
         import string
         alphabet = string.ascii_letters
         coords = input('Choose where to shoot(in B4/b4 format): ')
-        while ((type(coords[1:]) != int) or (coords[0] not in alphabet)):
+        while (type(coords[1:]) != int) or (coords[0] not in alphabet):
             coords = input('Please enter in B4 format: ')
         coords = (int(coords[1:] - 1), alphabet.index(coords[0].lower()))
         return coords
 
-class Field():
+
+class Field:
 
     def __init__(self):
         self.__ships = Field.__generate_field()
@@ -48,14 +50,14 @@ class Field():
 
     @staticmethod
     def __generate_field():
+        '''
+        Not my algorithm
+        '''
         ships_len = [4, 3, 2, 1]
         for ship in ships_len:
             from random import randint
 
             def add_cells(cells):
-                '''
-                Generates the adjacent tiles of the tiles from the list.
-                '''
                 for cell in cells:
                     for i in range(-1, 2):
                         for j in range(-1, 2):
@@ -109,3 +111,37 @@ class Field():
                     field += ' '
                 field += ' '
         return field
+
+    def field_with_ships(self):
+        field = '  A B C D E F G H I J'
+        for i in range(10):
+            field += '\n' + str(i + 1) + ' ' if i != 9 else '\n' + str(i + 1)
+            for j in range(10):
+                if (i, j) in self.__hit and len(self.__ships[i][j]) > 0:
+                    field += 'X'
+                elif len(self.__ships[i][j]) > 0:
+                    field += '*'
+                elif (i, j) in self.__hit:
+                    field += '0'
+                else:
+                    field += ' '
+                field += ' '
+        return field
+
+    class Game:
+
+        def __init__(self):
+            name1 = input('Enter first players name: ')
+            name2 = input('Enter second players name: ')
+            self.__field = [Field(), Field()]
+            self.__players = [Player(name1), Player(name2)]
+            self.__destroyed = [0, 0]
+
+        def field_with_ships(self, player):
+            return self.__field[player].field_with_ships()
+
+        def field_without_ships(self, player):
+            return self.__field[player].field_without_ships()
+
+        def read_position(self, player):
+            return self.__players[player].read_position()
